@@ -1,0 +1,4 @@
+# dsh-sloppatterns: register the vendored, offline Slop Patterns tools.
+- insert:
+    - id: dsh-sloppatterns
+      name: dsh-sloppatterns
