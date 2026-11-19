@@ -1,0 +1,76 @@
+{
+  "name": "dsh-sloppatterns",
+  "version": "1.0.1",
+  "description": "Offline Slop Patterns checks for DeepSeek Harness: the vendored rule engine and taxonomy exposed as native dsh tools.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/XKPU/dsh-sloppatterns.git"
+  },
+  "homepage": "https://github.com/XKPU/dsh-sloppatterns#readme",
+  "bugs": {
+    "url": "https://github.com/XKPU/dsh-sloppatterns/issues"
+  },
+  "type": "module",
+  "license": "GPL-3.0-or-later",
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "slop-patterns",
+    "ui",
+    "design",
+    "anti-pattern",
+    "lint",
+    "offline"
+  ],
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib/index.js",
+    "lib/core.js",
+    "vendor/slop-patterns/package.json",
+    "vendor/slop-patterns/rules.js",
+    "vendor/slop-patterns/patterns.json",
+    "vendor/slop-patterns/library.json",
+    "vendor/slop-patterns/LICENSE",
+    "vendor/slop-patterns/NOTICE.md",
+    "cordis.patch.yml",
+    "locale/en.json",
+    "locale/zh.json",
+    "icon.svg",
+    "README.md",
+    "CHANGELOG.md",
+    "SECURITY.md",
+    "SUPPORT.md",
+    "LICENSE"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "engines": {
+      "dsh": ">=0.2.0-0 <0.2.1-0 || >=0.2.1-0 <0.2.2-0 || >=0.2.2-0 <0.2.3-0 || >=0.2.3-0 <0.2.4-0"
+    }
+  },
+  "peerDependencies": {
+    "@deepseek-ai/dsh-tools": ">=0.2.0-0 <0.2.1-0 || >=0.2.1-0 <0.2.2-0 || >=0.2.2-0 <0.2.3-0 || >=0.2.3-0 <0.2.4-0"
+  },
+  "peerDependenciesMeta": {
+    "@deepseek-ai/dsh-tools": {
+      "optional": true
+    }
+  },
+  "scripts": {
+    "test": "node test/core.test.mjs",
+    "prepack": "npm test"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
