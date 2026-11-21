@@ -1,8 +1,8 @@
 # Slop Patterns (vendored)
 
 - Upstream: https://github.com/pavithralamahewa/slop-patterns
-- Commit: a3e704f0c4d2a4ef8d50215a23bc2effaea196f0 (2026-10-26)
-- Library version: 1.4.0 (released 2026-10-26)
+- Commit: 2af41864adb11847fda6bee7a457ea02983c760e (2026-11-21)
+- Library version: 1.7.0 (released 2026-11-20)
 
 Files copied unmodified:
 

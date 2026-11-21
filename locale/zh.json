@@ -1,6 +1,6 @@
 {
   "meta": {
     "title": "Slop Patterns（本地）",
-    "description": "内置 Slop Patterns 规则库，离线检查 UI 代码中的 AI 设计反模式，并可浏览、搜索完整分类。"
+    "description": "内置 Slop Patterns 规则库，离线检查 UI 代码或本地 HTML 目录中的 AI 设计反模式，并可浏览、搜索完整分类。"
   }
 }

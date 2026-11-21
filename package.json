@@ -1,7 +1,7 @@
 {
   "name": "dsh-sloppatterns",
-  "version": "1.0.1",
-  "description": "Offline Slop Patterns checks for DeepSeek Harness: the vendored rule engine and taxonomy exposed as native dsh tools.",
+  "version": "1.1.0",
+  "description": "Offline Slop Patterns checks for DeepSeek Harness: native dsh tools for snippets, local HTML folders and the vendored taxonomy.",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/XKPU/dsh-sloppatterns.git"
@@ -34,6 +34,7 @@
   "files": [
     "lib/index.js",
     "lib/core.js",
+    "lib/scan.js",
     "vendor/slop-patterns/package.json",
     "vendor/slop-patterns/rules.js",
     "vendor/slop-patterns/patterns.json",
