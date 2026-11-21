@@ -1,7 +1,15 @@
 {
   "name": "dsh-sloppatterns",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Offline Slop Patterns checks for DeepSeek Harness: the vendored rule engine and taxonomy exposed as native dsh tools.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/XKPU/dsh-sloppatterns.git"
+  },
+  "homepage": "https://github.com/XKPU/dsh-sloppatterns#readme",
+  "bugs": {
+    "url": "https://github.com/XKPU/dsh-sloppatterns/issues"
+  },
   "type": "module",
   "license": "GPL-3.0-or-later",
   "keywords": [
@@ -47,11 +55,11 @@
       "patch": "./cordis.patch.yml"
     },
     "engines": {
-      "dsh": ">=0.2.0"
+      "dsh": ">=0.2.0-0 <0.2.1-0 || >=0.2.1-0 <0.2.2-0 || >=0.2.2-0 <0.2.3-0 || >=0.2.3-0 <0.2.4-0"
     }
   },
   "peerDependencies": {
-    "@deepseek-ai/dsh-tools": ">=0.2.0"
+    "@deepseek-ai/dsh-tools": ">=0.2.0-0 <0.2.1-0 || >=0.2.1-0 <0.2.2-0 || >=0.2.2-0 <0.2.3-0 || >=0.2.3-0 <0.2.4-0"
   },
   "peerDependenciesMeta": {
     "@deepseek-ai/dsh-tools": {
