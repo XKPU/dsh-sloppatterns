@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## [v1.1.0] - 2026-11-21
+## [v1.1.0](https://github.com/XKPU/dsh-sloppatterns/compare/v1.0.1...v1.1.0) - 2026-11-21
 
 ### Added
 
@@ -19,7 +19,7 @@
 - 目录扫描默认最多处理 200 个 HTML 文件（`maxFiles` 可调至 1000），单文件上限 2 MB，单次总量
   上限 20 MB。
 
-## [v1.0.1] - 2026-11-19
+## [v1.0.1](https://github.com/XKPU/dsh-sloppatterns/compare/v1.0.0...v1.0.1) - 2026-11-19
 
 ### Added
 
@@ -29,7 +29,7 @@
 
 - dsh 宿主兼容范围限定为 0.2.0 至 0.2.3，包含各版本的预发布版。
 
-## v1.0.0 - 2026-11-19
+## [v1.0.0](https://github.com/XKPU/dsh-sloppatterns/compare/1d4496a49a87769b4e057015be1beac60a9fb771...v1.0.0) - 2026-11-19
 
 ### Added
 
@@ -40,6 +40,3 @@
 - 六个原生工具：`slop_check_design`、`slop_list_patterns`、`slop_search_patterns`、
   `slop_get_pattern`、`slop_why` 与 `slop_changelog`。
 - 针对 101 条具备机械判定特征的模式提供离线检查。
-
-[v1.1.0]: https://github.com/XKPU/dsh-sloppatterns/compare/v1.0.1...v1.1.0
-[v1.0.1]: https://github.com/XKPU/dsh-sloppatterns/compare/v1.0.0...v1.0.1
