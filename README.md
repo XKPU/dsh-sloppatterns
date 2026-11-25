@@ -14,6 +14,7 @@
 - [使用](#使用)
   - [检查代码片段](#检查代码片段)
   - [扫描本地目录](#扫描本地目录)
+  - [核对无法自动检测的模式](#核对无法自动检测的模式)
 - [提供的工具](#提供的工具)
 - [隐私](#隐私)
 - [反馈与安全](#反馈与安全)
@@ -24,7 +25,7 @@
 ## 特性
 
 - **完全离线**：无需任何网络访问，您的代码绝不离开您的机器。
-- **原生工具**：注册 7 个 `slop_*` 工具，覆盖片段检查、目录扫描、浏览、搜索、详情与版本查询。
+- **原生工具**：注册 8 个 `slop_*` 工具，覆盖片段检查、目录扫描、浏览、搜索、人工复核检索、详情与版本查询。
 - **可检查片段、文件与整个目录**：`slop_check_design` 接收 CSS/HTML/JSX 片段，`slop_scan_path` 递归扫描本地
   HTML 目录并内联本地样式表。
 - **模型友好的返回**：所有工具返回均为英文，不含中文字符，~~避免部分模型提供商因中文内容触发风控~~。
@@ -87,7 +88,18 @@ Agent 会返回命中的模式编号、证据和修复建议。想先了解规�
 目录扫描默认最多处理 200 个 HTML 文件，单文件上限 2 MB，单次总量上限 20 MB；可用 `maxFiles`
 调高文件数上限（最多 1000）。相对路径按 dsh 宿主进程的工作目录解析，建议直接传绝对路径。
 
-`slop_check_design`、`slop_scan_path` 和 `slop_list_patterns` 都支持 `format: "json"`，
+### 核对无法自动检测的模式
+
+规则检查覆盖不到 461 条需要成页渲染或人工判断的模式。让 Agent 按场景检索：
+
+> 用 `slop_review_patterns` 查一下「修改密码、换绑邮箱」相关的复核项，挑最相关的几条，
+> 再用 `slop_get_pattern` 把修复建议和人工核对步骤列出来。
+
+`slop_review_patterns` 只在无法自动检测的模式里做关键词排序，默认返回 6 条、每条一行
+（`code`、`id`、名称、一句话），可用 `limit`（最多 20）与 `track` 收窄范围，或用
+`format: "json"` 取结构化结果；需要全文时再按 id 调 `slop_get_pattern`，避免一次拉取大量内容。
+
+`slop_check_design`、`slop_scan_path`、`slop_list_patterns` 和 `slop_review_patterns` 都支持 `format: "json"`，
 便于脚本或其他工具读取。`slop_check_design` 与 `slop_scan_path` 还支持 `strict: true`，
 对 `A3`、`A10`、`A15`、`A23`、`A36` 五个 graded 模式返回 `STRICT: PASS` 或 `STRICT: FAIL`。
 
@@ -99,18 +111,21 @@ Agent 会返回命中的模式编号、证据和修复建议。想先了解规�
 | `slop_scan_path` | 递归扫描本地 HTML 文件或目录，内联本地样式表，返回逐文件命中、干净数、跳过原因与 graded 汇总；支持 `format`、`strict` 与 `maxFiles`。 |
 | `slop_list_patterns` | 列出完整分类（code、id、名称、一句话描述），可按 `surface` / `behavioral` 过滤；支持 `format`。 |
 | `slop_search_patterns` | 自然语言搜索，例如 `gradient headline`。 |
+| `slop_review_patterns` | 只在无法自动检测的 461 条模式中按关键词检索（如 `password change`、`subagent approval`），返回精简的排序清单，便于继续用 `slop_get_pattern` 取修复建议与人工核对步骤；支持 `track`、`limit` 与 `format`。 |
 | `slop_get_pattern` | 按 id 或 code 查看单条模式全文：表现、为什么工具会产出它、影响谁、怎么修、来源。 |
 | `slop_why` | 只返回某条模式的成因解释。 |
 | `slop_changelog` | 库版本、发布记录与版本规则。 |
 
 `slop_check_design` 与 `slop_scan_path` 覆盖 104 条代码规则中带有机械判定特征的 101 条反模式；其余
 条目仍可通过搜索和 `slop_get_pattern` 查看。检查结果会用 `[graded]` 标出 CLI 定义的五个 graded 模式，
-JSON 输出同时包含 `graded`、`strictPass` 与库版本。内置数据为 Slop Patterns **v1.7.0**
-（550 条模式、104 条规则），对应上游 commit `2af4186`。
+JSON 输出同时包含 `graded`、`strictPass` 与库版本。内置数据为 Slop Patterns **v1.9.0**
+（562 条模式、104 条规则），对应上游 commit `3958bf3`。
 
-v1.7.0 同步了上游 1.5.0 至 1.7.0 的 16 条新条目，其中 10 条是 agent oversight 模式。这些新增条目
-均为人工判断类，没有机械判定规则，因此不会出现在 `slop_check_design` 或 `slop_scan_path` 的结果中；
-可以用 `slop_search_patterns` 找到它们，再用 `slop_get_pattern` 阅读全文。
+v1.8.0 与 v1.9.0 同步了上游 12 条新条目，其中 11 条是 agent 行为与权限类（behavioral）模式，
+1 条是页面类（surface）模式。这些新增条目均为人工判断类，没有机械判定规则，因此不会出现在
+`slop_check_design` 或 `slop_scan_path` 的结果中。想按功能或场景找到它们，用 `slop_review_patterns`
+（它只在无法自动检测的 461 条中检索，默认返回 6 条，每条一行），再用 `slop_get_pattern` 阅读全文；
+也可以用 `slop_search_patterns` 在全部 562 条中搜索。
 
 ## 隐私
 

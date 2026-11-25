@@ -1,5 +1,21 @@
 # CHANGELOG
 
+## [v1.2.0](https://github.com/XKPU/dsh-sloppatterns/compare/v1.1.0...v1.2.0) - 2026-11-25
+
+### Added
+
+- 新增 `slop_review_patterns`：只在无法自动检测的 461 条模式中按关键词检索，返回精简的排序清单
+  （`code`、`id`、名称、一句话），支持 `track`、`limit`（最多 20）与 `format: "json"`。
+  用于让 agent 以较小 token 开销找到与功能或场景相关的复核项，再按 id 用 `slop_get_pattern`
+  取修复建议与人工核对步骤。
+
+### Changed
+
+- 内置数据同步至 Slop Patterns v1.9.0（562 条模式），并入上游 PR
+  [#50](https://github.com/pavithralamahewa/slop-patterns/pull/50) 与
+  [#53](https://github.com/pavithralamahewa/slop-patterns/pull/53)：新增 12 条人工判断类模式
+  （11 条 behavioral、1 条 surface），代码规则仍为 104 条。
+
 ## [v1.1.0](https://github.com/XKPU/dsh-sloppatterns/compare/v1.0.1...v1.1.0) - 2026-11-21
 
 ### Added

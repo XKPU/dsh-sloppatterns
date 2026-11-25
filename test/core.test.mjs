@@ -12,13 +12,15 @@ import {
   listPatternsJson,
   listPatternsText,
   meta,
+  reviewPatternsJson,
+  reviewPatternsText,
   searchPatternsText,
   whyText,
 } from '../lib/core.js'
 import { scanPathJson, scanPathText } from '../lib/scan.js'
 
-assert.equal(meta.version, '1.7.0')
-assert.equal(meta.patterns, 550)
+assert.equal(meta.version, '1.9.0')
+assert.equal(meta.patterns, 562)
 assert.equal(meta.rules, 104)
 assert.equal(meta.checked, 101)
 
@@ -34,16 +36,32 @@ const oversized = checkDesignText('x'.repeat(300001))
 assert.match(oversized, /more than 300 KB/)
 
 const all = listPatternsText()
-assert.match(all, /550 patterns\./)
+assert.match(all, /562 patterns\./)
 const behavioral = listPatternsText('behavioral')
 assert.ok(!behavioral.includes('\tsurface\t') && behavioral.endsWith('patterns.'))
 
 const search = searchPatternsText('gradient headline')
 assert.match(search, /A10\tgradient-text-headline/)
 
+const review = JSON.parse(reviewPatternsJson('password change email', { limit: 4 }))
+assert.equal(review.count, 4)
+assert.equal(review.reviewable, 461)
+assert.equal(review.patterns[0].code, 'B283')
+assert.ok(review.patterns.every((p) => p.code !== 'A1'))
+assert.equal(JSON.parse(reviewPatternsJson('password change email', { limit: 99 })).count, 20)
+assert.equal(JSON.parse(reviewPatternsJson('password change email', { limit: 0 })).count, 6)
+assert.equal(JSON.parse(reviewPatternsJson('password change email', { track: 'surface' }))
+  .patterns.every((p) => p.track === 'surface'), true)
+assert.match(reviewPatternsText('password change email'), /Call slop_get_pattern with the id/)
+assert.match(reviewPatternsText('zzzz'), /No match among the 461 patterns/)
+assert.equal(reviewPatternsText(''), 'Empty query.')
+
 const oversight = getPatternText('stop-doesnt-stop')
 assert.match(oversight, /B263\s+Stop Doesn't Stop/)
 assert.match(oversight, /THE FIX/)
+
+const recent = getPatternText('account-changes-without-proof')
+assert.match(recent, /B283\s+Account Changes Without Proof/)
 
 const byCode = getPatternText('a1')
 assert.match(byCode, /The Unchosen Gradient/)
@@ -56,8 +74,9 @@ assert.match(whyText('a1'), /WHY|Tailwind|trained|indigo/i)
 assert.match(whyText('nope'), /No pattern "nope"/)
 
 const changelog = changelogText()
-assert.match(changelog, /Slop Patterns v1\.7\.0/)
+assert.match(changelog, /Slop Patterns v1\.9\.0/)
 assert.match(changelog, /B263 Stop Doesn't Stop/)
+assert.match(changelog, /\+ B283 Account Changes Without Proof/)
 assert.match(changelog, /Versioning:/)
 
 assert.equal(meta.graded, 5)
@@ -84,7 +103,7 @@ assert.match(oversizedJson.error, /more than 300 KB/)
 
 const listJsonText = listPatternsJson()
 const listJson = JSON.parse(listJsonText)
-assert.equal(listJson.length, 550)
+assert.equal(listJson.length, 562)
 assert.ok(listJson.every((p) => p.code && p.id && p.url))
 assert.ok(JSON.parse(listPatternsJson('behavioral')).every((p) => p.track === 'behavioral'))
 

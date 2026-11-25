@@ -1,6 +1,6 @@
 {
   "meta": {
     "title": "Slop Patterns (local)",
-    "description": "Ships the Slop Patterns library inside dsh: check UI code or local HTML folders for AI design anti-patterns offline, and browse or search the full taxonomy."
+    "description": "Ships the Slop Patterns library inside dsh: check UI code or local HTML folders for AI design anti-patterns offline, browse or search the full taxonomy, and find the patterns that need human review by keyword."
   }
 }
